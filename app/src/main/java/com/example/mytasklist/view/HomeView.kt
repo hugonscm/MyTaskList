@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -101,7 +100,7 @@ fun HomeView(
                     Text(
                         modifier = Modifier.fillMaxWidth(0.7f),
                         textAlign = TextAlign.Center,
-                        text = "Experimente adicionar uma tarefa clicando no botão +",
+                        text = stringResource(R.string.experimente_adicionar_uma_tarefa_clicando_no_bot_o),
                         fontFamily = myFontFamily,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,

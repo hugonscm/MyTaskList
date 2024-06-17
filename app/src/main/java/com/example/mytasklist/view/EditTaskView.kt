@@ -97,7 +97,7 @@ fun EditTaskView(
                     isTitleError = false
                 },
                 isError = isTitleError,
-                supportingText = { if (isTitleError) Text("Digite um título para a tarefa") },
+                supportingText = { if (isTitleError) Text(stringResource(R.string.digite_um_titulo_para_a_tarefa)) },
                 placeholder = {
                     Text(
                         text = stringResource(R.string.titulo),
@@ -122,7 +122,7 @@ fun EditTaskView(
                     isDetailsError = false
                 },
                 isError = isDetailsError,
-                supportingText = { if (isDetailsError) Text("Digite os detalhes da tarefa") },
+                supportingText = { if (isDetailsError) Text(stringResource(R.string.digite_os_detalhes_da_tarefa)) },
                 placeholder = {
                     Text(
                         text = stringResource(R.string.detalhes),
@@ -183,7 +183,7 @@ fun EditTaskView(
                             navController.popBackStack()
                         }
                     },
-                    text = "Cancelar",
+                    text = stringResource(R.string.cancelar),
                     fontFamily = myFontFamily,
                     fontSize = 25.sp,
                     fontWeight = FontWeight.Bold,

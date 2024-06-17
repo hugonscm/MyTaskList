@@ -8,4 +8,9 @@
     <string name="detalhes">Detalhes</string>
     <string name="adicionar">Adicionar</string>
     <string name="tarefas">Tarefas</string>
+    <string name="digite_um_titulo_para_a_tarefa">Digite um título para a tarefa</string>
+    <string name="digite_os_detalhes_da_tarefa">Digite os detalhes da tarefa</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="toque_para_ver_mais">Toque para ver mais</string>
+    <string name="experimente_adicionar_uma_tarefa_clicando_no_bot_o">Experimente adicionar uma tarefa clicando no botão +</string>
 </resources>

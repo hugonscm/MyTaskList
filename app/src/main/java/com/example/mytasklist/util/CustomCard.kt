@@ -23,7 +23,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.font.FontWeight
@@ -95,7 +94,7 @@ fun CustomCard(task: Task, onEditClick: () -> Unit, onRemoveClick: () -> Unit) {
             ) {
                 if ((titleOverflow || detailsOverflow) && !expanded) {
                     Text(
-                        text = "Toque para ver mais",
+                        text = stringResource(R.string.toque_para_ver_mais),
                         fontFamily = myFontFamily,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Light,
