@@ -17,7 +17,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowInsetsControllerCompat
@@ -59,6 +58,7 @@ class MainActivity : ComponentActivity() {
             LaunchedEffect(isDarkTheme) {
                 when (isDarkTheme) {
                     "-2" -> isLoading = true
+
                     "0" -> {
                         darkTheme = false
                         isLoading = false
