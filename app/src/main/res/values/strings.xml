@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MyTaskList</string>
+    <string name="adicionar_tarefa">Adicionar tarefa</string>
+    <string name="editar_tarefa">Editar tarefa</string>
+    <string name="excluir_tarefa">Excluir tarefa</string>
+    <string name="voltar">Voltar</string>
+    <string name="titulo">Título</string>
+    <string name="detalhes">Detalhes</string>
+    <string name="adicionar">Adicionar</string>
+    <string name="tarefas">Tarefas</string>
+</resources>
