@@ -15,7 +15,8 @@ private val LightColors = lightColorScheme(
     tertiary = MyPurple,
     onTertiary = MyPurple,
     onSurface = MyWhite,
-    onSecondary = MyPurple
+    onSecondary = MyPurple,
+    background = MyPurple
 )
 
 
@@ -25,7 +26,8 @@ private val DarkColors = darkColorScheme(
     tertiary = light_primary,
     onTertiary = MyWhite,
     onSurface = MyBlack,
-    onSecondary = MyWhite
+    onSecondary = MyWhite,
+    background = MyBlack
 )
 
 @Composable
@@ -44,7 +46,8 @@ fun ThemeSwitcherTheme(
     }
 
     (LocalView.current.context as Activity).window.statusBarColor = colorScheme.primary.toArgb()
-    (LocalView.current.context as Activity).window.navigationBarColor = colorScheme.secondary.toArgb()
+    (LocalView.current.context as Activity).window.navigationBarColor =
+        colorScheme.secondary.toArgb()
 
     MaterialTheme(
         colorScheme = colorScheme,

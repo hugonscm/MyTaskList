@@ -19,6 +19,7 @@ import com.example.mytasklist.navigation.NavManager
 import com.example.mytasklist.room.TaskDatabase
 import com.example.mytasklist.theme.ThemeSwitcherTheme
 import com.example.mytasklist.viewmodel.TaskViewModel
+import com.example.mytasklist.viewmodel.ThemeViewModel
 
 //usado para salvar o id do usuario logado, precisa ser definido no level mais alto do projeto
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "dark_theme_datastore")
@@ -36,12 +37,13 @@ class MainActivity : ComponentActivity() {
 
             val ctx = LocalContext.current
             val scope = rememberCoroutineScope()
-            val viewModel = TaskViewModel(dao, ctx)
+            val taskViewModel = TaskViewModel(dao)
+            val themeViewModel = ThemeViewModel(ctx)
 
             // 0 = dark  1 = light
             val isDarkTheme by remember {
                 derivedStateOf {
-                    viewModel.state.isDarkTheme == "0"
+                    themeViewModel.state.isDarkTheme == "0"
                 }
             }
 
@@ -54,10 +56,10 @@ class MainActivity : ComponentActivity() {
 
             ThemeSwitcherTheme(darkTheme = isDarkTheme) {
                 NavManager(
-                    viewModel = viewModel,
+                    taskViewModel = taskViewModel,
                     darkTheme = isDarkTheme,
                     onThemeUpdated = {
-                        viewModel.darkThemeChange(ctx, scope, !isDarkTheme)
+                        themeViewModel.darkThemeChange(ctx, scope, !isDarkTheme)
                     }
                 )
             }

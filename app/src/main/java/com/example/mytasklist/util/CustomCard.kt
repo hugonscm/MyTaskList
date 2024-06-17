@@ -49,7 +49,7 @@ fun CustomCard(task: Task, onEditClick: () -> Unit, onRemoveClick: () -> Unit) {
     Card(
         modifier = Modifier
             .padding(
-                top = 8.dp,
+                bottom = 10.dp,
                 start = 10.dp,
                 end = 10.dp
             ),

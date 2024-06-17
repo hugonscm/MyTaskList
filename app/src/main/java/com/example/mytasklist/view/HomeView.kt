@@ -39,11 +39,10 @@ import com.example.mytasklist.viewmodel.TaskViewModel
 @Composable
 fun HomeView(
     navController: NavController,
-    viewModel: TaskViewModel,
+    taskViewModel: TaskViewModel,
     darkTheme: Boolean,
     onThemeUpdated: () -> Unit
 ) {
-    val state = viewModel.state
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -60,7 +59,7 @@ fun HomeView(
 
             Row(
                 Modifier
-                    .padding(start = 10.dp, end = 10.dp, top = 5.dp),
+                    .padding(horizontal = 10.dp, vertical = 5.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
@@ -79,16 +78,18 @@ fun HomeView(
                 )
             }
 
-            if (state.taskList.isNotEmpty()) {
+            val list = taskViewModel.state.taskList
+
+            if (list.isNotEmpty()) {
                 LazyColumn {
-                    items(state.taskList) {
+                    items(taskViewModel.state.taskList) {
                         CustomCard(
                             task = it,
                             onEditClick = { navController.navigate("editTaskView/${it.id}/${it.title}/${it.details}") },
-                            onRemoveClick = { viewModel.removeTask(it) })
+                            onRemoveClick = { taskViewModel.removeTask(it) })
                     }
                     item {
-                        Spacer(modifier = Modifier.height(100.dp))
+                        Spacer(modifier = Modifier.height(80.dp))
                     }
                 }
             } else {
@@ -109,7 +110,6 @@ fun HomeView(
                 }
             }
         }
-
 
         FloatingActionButton(modifier = Modifier
             .padding(bottom = 10.dp, end = 10.dp)

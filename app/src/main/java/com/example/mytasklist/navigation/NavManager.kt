@@ -12,17 +12,17 @@ import com.example.mytasklist.view.HomeView
 import com.example.mytasklist.viewmodel.TaskViewModel
 
 @Composable
-fun NavManager(viewModel: TaskViewModel, darkTheme: Boolean, onThemeUpdated: () -> Unit) {
+fun NavManager(taskViewModel: TaskViewModel, darkTheme: Boolean, onThemeUpdated: () -> Unit) {
 
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "homeView" ){
         composable("homeView"){
-            HomeView(navController, viewModel, darkTheme, onThemeUpdated)
+            HomeView(navController, taskViewModel, darkTheme, onThemeUpdated)
         }
 
         composable("addTaskView"){
-            AddTaskView(navController, viewModel)
+            AddTaskView(navController, taskViewModel)
         }
 
         composable("editTaskView/{id}/{title}/{details}", arguments = listOf(
@@ -30,7 +30,7 @@ fun NavManager(viewModel: TaskViewModel, darkTheme: Boolean, onThemeUpdated: () 
             navArgument("title") {type = NavType.StringType},
             navArgument("details") {type = NavType.StringType}
         )){
-            EditTaskView(navController, viewModel,
+            EditTaskView(navController, taskViewModel,
                 it.arguments!!.getInt("id"),
                 it.arguments?.getString("title").toString(),
                 it.arguments?.getString("details").toString()
