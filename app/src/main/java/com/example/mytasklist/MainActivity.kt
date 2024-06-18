@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
             val taskViewModel = TaskViewModel(dao)
             val themeViewModel = ThemeViewModel(ctx)
 
-            // 0 = dark  1 = light
+            // 0 = darktheme  1 = lighttheme
             val isDarkTheme by remember {
                 derivedStateOf {
                     themeViewModel.state.isDarkTheme == "0"
