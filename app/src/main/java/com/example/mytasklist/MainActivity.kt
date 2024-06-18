@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
 
             LaunchedEffect(Unit) {
                 isLoading = true
-                delay(800)
+                delay(300)
                 isLoading = false
             }
 
