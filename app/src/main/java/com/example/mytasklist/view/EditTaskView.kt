@@ -32,21 +32,25 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.mytasklist.R
 import com.example.mytasklist.model.Task
 import com.example.mytasklist.navigation.canGoBack
+import com.example.mytasklist.room.TaskDatabaseDao
 import com.example.mytasklist.theme.myFontFamily
 import com.example.mytasklist.util.CustomTopAppBar
 import com.example.mytasklist.viewmodel.TaskViewModel
+import com.example.mytasklist.viewmodel.TaskViewModelFactory
 
 @Composable
 fun EditTaskView(
     navController: NavController,
-    viewModel: TaskViewModel,
     id: Int,
     title: String,
-    details: String
+    details: String,
+    dao: TaskDatabaseDao,
+    viewModel: TaskViewModel = viewModel(factory = TaskViewModelFactory(dao))
 ) {
 
     var newTitle by remember { mutableStateOf(title) }
@@ -144,7 +148,7 @@ fun EditTaskView(
                 onClick = {
                     if (newTitle.isNotEmpty() && newDetails.isNotEmpty()) {
                         val task = Task(id = id, title = newTitle, details = newDetails)
-                        viewModel.updateTask(task)
+                        (viewModel::updateTask)(task)
                         navController.popBackStack("homeView", false)
                     } else {
                         if (newTitle.isEmpty()) {

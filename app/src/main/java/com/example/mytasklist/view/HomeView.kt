@@ -21,6 +21,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -29,20 +31,27 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.mytasklist.R
+import com.example.mytasklist.room.TaskDatabaseDao
 import com.example.mytasklist.theme.myFontFamily
 import com.example.mytasklist.util.CustomCard
 import com.example.mytasklist.util.ThemeSwitcher
 import com.example.mytasklist.viewmodel.TaskViewModel
+import com.example.mytasklist.viewmodel.TaskViewModelFactory
 
 @Composable
 fun HomeView(
     navController: NavController,
-    taskViewModel: TaskViewModel,
     darkTheme: Boolean,
-    onThemeUpdated: () -> Unit
+    onThemeUpdated: () -> Unit,
+    dao: TaskDatabaseDao,
+    taskViewModel: TaskViewModel = viewModel(factory = TaskViewModelFactory(dao))
 ) {
+
+    val uiTaskState by taskViewModel.taskState.collectAsState()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -78,15 +87,15 @@ fun HomeView(
                 )
             }
 
-            val list = taskViewModel.state.taskList
+            val list = uiTaskState.taskList
 
             if (list.isNotEmpty()) {
                 LazyColumn {
-                    items(taskViewModel.state.taskList) {
+                    items(list) {
                         CustomCard(
                             task = it,
                             onEditClick = { navController.navigate("editTaskView/${it.id}/${it.title}/${it.details}") },
-                            onRemoveClick = { taskViewModel.removeTask(it) })
+                            onRemoveClick = { (taskViewModel::removeTask)(it) })
                     }
                     item {
                         Spacer(modifier = Modifier.height(80.dp))

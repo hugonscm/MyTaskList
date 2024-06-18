@@ -13,10 +13,10 @@ object NightModeDataStore {
 
     private val darkThemePreferences = stringPreferencesKey("dark_theme")
 
-    fun editDataStore(ctx: Context, scope: CoroutineScope, isDarkTheme: Boolean) {
+    fun editDataStore(ctx: Context, scope: CoroutineScope, isDarkTheme: String) {
         scope.launch {
             ctx.dataStore.edit { preferences ->
-                preferences[darkThemePreferences] = if (isDarkTheme) "0" else "1"
+                preferences[darkThemePreferences] = isDarkTheme
             }
         }
     }
