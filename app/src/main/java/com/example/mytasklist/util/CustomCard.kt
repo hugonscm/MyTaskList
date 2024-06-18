@@ -42,8 +42,11 @@ fun CustomCard(task: Task, onEditClick: () -> Unit, onRemoveClick: () -> Unit) {
 
     val openDialog = remember { mutableStateOf(false) }
 
-    if (openDialog.value){
-        CustomAlertDialog(onclose = { openDialog.value = false }, onConfirm = {onRemoveClick()})
+    if (openDialog.value) {
+        CustomAlertDialog(onclose = { openDialog.value = false }, onConfirm = {
+            onRemoveClick()
+            openDialog.value = false
+        })
     }
 
     Card(
