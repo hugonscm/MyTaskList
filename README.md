@@ -10,4 +10,4 @@ Aplicativo de listas de tarefas.
 - SplashScreen
 
 ## Prévias
-<img src="https://raw.githubusercontent.com/hugonscm/MyTaskList/master/Pr%C3%A9via.png" alt="prévias" min-width="800px" max-width="800px" width="800px" >
+<img src="https://raw.githubusercontent.com/hugonscm/MyTaskList/master/Pr%C3%A9vias.png" alt="prévias" min-width="800px" max-width="800px" width="800px" >
