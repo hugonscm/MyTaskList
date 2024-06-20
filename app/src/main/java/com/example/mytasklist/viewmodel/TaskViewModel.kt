@@ -3,7 +3,7 @@ package com.example.mytasklist.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mytasklist.model.Task
-import com.example.mytasklist.room.TaskDatabaseDao
+import com.example.mytasklist.room.TasksRepository
 import com.example.mytasklist.states.TaskState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class TaskViewModel(
-    private val dao: TaskDatabaseDao
+    private val tasksRepository: TasksRepository
 ) : ViewModel() {
 
     private val _taskState = MutableStateFlow(TaskState())
@@ -21,7 +21,7 @@ class TaskViewModel(
 
     init {
         viewModelScope.launch {
-            dao.getTasks().collectLatest {
+            tasksRepository.getTasks().collectLatest {
                 _taskState.update { currentState ->
                     currentState.copy(
                         taskList = it
@@ -31,15 +31,15 @@ class TaskViewModel(
         }
     }
 
-    fun addTask(task: Task) = viewModelScope.launch {
-        dao.addTask(task = task)
+    suspend fun addTask(task: Task) {
+        tasksRepository.addTask(task)
     }
 
-    fun updateTask(task: Task) = viewModelScope.launch {
-        dao.updateTask(task = task)
+    suspend fun updateTask(task: Task) {
+        tasksRepository.updateTask(task = task)
     }
 
-    fun removeTask(task: Task) = viewModelScope.launch {
-        dao.removeTask(task = task)
+    suspend fun removeTask(task: Task) {
+        tasksRepository.removeTask(task = task)
     }
 }

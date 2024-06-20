@@ -1,7 +1,6 @@
 package com.example.mytasklist.viewmodel
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mytasklist.datastore.NightModeDataStore
@@ -25,7 +24,6 @@ class ThemeViewModel(
         viewModelScope.launch {
             NightModeDataStore.getDataStore(ctx).collectLatest {
                 _thmemeState.update { currentState ->
-                    Log.e("themeviewmodel", "init")
                     currentState.copy(
                         isDarkTheme = it,
                         isThemeLoaded = true
@@ -36,7 +34,6 @@ class ThemeViewModel(
     }
 
     fun darkThemeChange(ctx: Context, scope: CoroutineScope, isDarkTheme: String) {
-        Log.e("themeviewmodel", "switch")
         NightModeDataStore.editDataStore(ctx, scope, isDarkTheme)
     }
 }

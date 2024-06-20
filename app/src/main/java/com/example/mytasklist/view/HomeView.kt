@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -34,23 +35,23 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.mytasklist.R
-import com.example.mytasklist.room.TaskDatabaseDao
 import com.example.mytasklist.theme.myFontFamily
 import com.example.mytasklist.util.CustomCard
 import com.example.mytasklist.util.ThemeSwitcher
+import com.example.mytasklist.viewmodel.AppViewModelProvider
 import com.example.mytasklist.viewmodel.TaskViewModel
-import com.example.mytasklist.viewmodel.TaskViewModelFactory
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeView(
     navController: NavController,
     darkTheme: Boolean,
     onThemeUpdated: () -> Unit,
-    dao: TaskDatabaseDao,
-    taskViewModel: TaskViewModel = viewModel(factory = TaskViewModelFactory(dao))
+    taskViewModel: TaskViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
 
     val uiTaskState by taskViewModel.taskState.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
 
     Box(
         modifier = Modifier
@@ -95,7 +96,11 @@ fun HomeView(
                         CustomCard(
                             task = it,
                             onEditClick = { navController.navigate("editTaskView/${it.id}/${it.title}/${it.details}") },
-                            onRemoveClick = { (taskViewModel::removeTask)(it) })
+                            onRemoveClick = {
+                                coroutineScope.launch {
+                                    taskViewModel.removeTask(it)
+                                }
+                            })
                     }
                     item {
                         Spacer(modifier = Modifier.height(80.dp))

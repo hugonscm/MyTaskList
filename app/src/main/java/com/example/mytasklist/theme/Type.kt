@@ -13,7 +13,7 @@ val provider = GoogleFont.Provider(
 
 val myFontFamily = FontFamily(
     Font(
-        googleFont = GoogleFont("EB Garamond"),
+        googleFont = GoogleFont("Roboto"),
         fontProvider = provider
     )
 )

@@ -14,12 +14,10 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.room.Room
 import com.example.mytasklist.navigation.NavManager
-import com.example.mytasklist.room.TaskDatabase
 import com.example.mytasklist.theme.ThemeSwitcherTheme
+import com.example.mytasklist.viewmodel.AppViewModelProvider
 import com.example.mytasklist.viewmodel.ThemeViewModel
-import com.example.mytasklist.viewmodel.ThemeViewModelFactory
 import kotlinx.coroutines.launch
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "dark_theme_datastore")
@@ -28,17 +26,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val database =
-            Room.databaseBuilder(this, TaskDatabase::class.java, "db_task").build()
-        val dao = database.taskDao()
-
         val splashScreen = installSplashScreen()
 
         setContent {
             val ctx = LocalContext.current
             val scope = rememberCoroutineScope()
 
-            val themeViewModel: ThemeViewModel = viewModel(factory = ThemeViewModelFactory(ctx))
+            val themeViewModel: ThemeViewModel = viewModel(factory = AppViewModelProvider.Factory)
             val themeViewModelState by themeViewModel.themeState.collectAsState()
 
             val keepSplashScreenOnScreen = !themeViewModelState.isThemeLoaded
@@ -66,8 +60,7 @@ class MainActivity : ComponentActivity() {
                                 if (isDarkTheme) "1" else "0"
                             )
                         }
-                    },
-                    dao
+                    }
                 )
             }
         }

@@ -22,7 +22,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -37,11 +38,11 @@ import androidx.navigation.NavController
 import com.example.mytasklist.R
 import com.example.mytasklist.model.Task
 import com.example.mytasklist.navigation.canGoBack
-import com.example.mytasklist.room.TaskDatabaseDao
 import com.example.mytasklist.theme.myFontFamily
 import com.example.mytasklist.util.CustomTopAppBar
+import com.example.mytasklist.viewmodel.AppViewModelProvider
 import com.example.mytasklist.viewmodel.TaskViewModel
-import com.example.mytasklist.viewmodel.TaskViewModelFactory
+import kotlinx.coroutines.launch
 
 @Composable
 fun EditTaskView(
@@ -49,15 +50,16 @@ fun EditTaskView(
     id: Int,
     title: String,
     details: String,
-    dao: TaskDatabaseDao,
-    viewModel: TaskViewModel = viewModel(factory = TaskViewModelFactory(dao))
+    taskViewModel: TaskViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
 
-    var newTitle by remember { mutableStateOf(title) }
-    var newDetails by remember { mutableStateOf(details) }
+    val coroutineScope = rememberCoroutineScope()
 
-    var isTitleError by remember { mutableStateOf(false) }
-    var isDetailsError by remember { mutableStateOf(false) }
+    var newTitle by rememberSaveable { mutableStateOf(title) }
+    var newDetails by rememberSaveable { mutableStateOf(details) }
+
+    var isTitleError by rememberSaveable { mutableStateOf(false) }
+    var isDetailsError by rememberSaveable { mutableStateOf(false) }
 
     val colorsTextFields = OutlinedTextFieldDefaults.colors(
         unfocusedContainerColor = MaterialTheme.colorScheme.tertiary.copy(0.9f),
@@ -148,7 +150,11 @@ fun EditTaskView(
                 onClick = {
                     if (newTitle.isNotEmpty() && newDetails.isNotEmpty()) {
                         val task = Task(id = id, title = newTitle, details = newDetails)
-                        (viewModel::updateTask)(task)
+
+                        coroutineScope.launch {
+                            taskViewModel.updateTask(task)
+                        }
+
                         navController.popBackStack("homeView", false)
                     } else {
                         if (newTitle.isEmpty()) {

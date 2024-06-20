@@ -9,13 +9,13 @@ import com.example.mytasklist.model.Task
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface TaskDatabaseDao {
+interface TaskDao {
 
     @Query("SELECT * FROM task")
     fun getTasks(): Flow<List<Task>>
 
     @Query("SELECT * FROM task WHERE id = :id")
-    fun getTask(id: Int): Flow<List<Task>>
+    fun getTask(id: Int): Flow<Task>
 
     @Insert
     suspend fun addTask(task: Task)
