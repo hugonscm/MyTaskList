@@ -9,13 +9,10 @@ import com.example.mytasklist.TaskApplication
 object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
-            TaskViewModel(
-                taskApplication().container.tasksRepository
-            )
+            TaskViewModel(taskApplication().container.tasksRepository)
         }
         initializer {
-            val application = taskApplication()
-            ThemeViewModel(application.applicationContext)
+            ThemeViewModel(taskApplication().applicationContext)
         }
     }
 }
