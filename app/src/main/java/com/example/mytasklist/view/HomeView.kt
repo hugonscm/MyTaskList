@@ -88,6 +88,8 @@ fun HomeView(
                 )
             }
 
+            Spacer(modifier = Modifier.height(5.dp))
+
             val list = uiTaskState.taskList
 
             if (list.isNotEmpty()) {

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -113,7 +114,8 @@ fun AddTaskView(
                     .heightIn(70.dp, 120.dp),
                 colors = colorsTextFields,
                 textStyle = TextStyle(fontFamily = myFontFamily, fontSize = 28.sp),
-                shape = RoundedCornerShape(10.dp)
+                //                shape = RoundedCornerShape(10.dp)
+                shape = CutCornerShape(topStart = 16.dp, bottomEnd = 16.dp),
             )
 
             Spacer(modifier = Modifier.height(3.dp))
@@ -138,7 +140,8 @@ fun AddTaskView(
                     .fillMaxHeight(0.8f),
                 colors = colorsTextFields,
                 textStyle = TextStyle(fontFamily = myFontFamily, fontSize = 20.sp),
-                shape = RoundedCornerShape(10.dp)
+                //                shape = RoundedCornerShape(10.dp)
+                shape = CutCornerShape(topStart = 16.dp, bottomEnd = 16.dp),
             )
 
             Spacer(modifier = Modifier.height(3.dp))
