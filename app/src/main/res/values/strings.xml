@@ -13,4 +13,6 @@
     <string name="cancelar">Cancelar</string>
     <string name="toque_para_ver_mais">Toque para ver mais</string>
     <string name="experimente_adicionar_uma_tarefa_clicando_no_bot_o">Experimente adicionar uma tarefa clicando no botão +</string>
+    <string name="tem_certeza_que_deseja_exluir">Tem certeza que deseja exluir?</string>
+    <string name="confirmar">Confirmar</string>
 </resources>
