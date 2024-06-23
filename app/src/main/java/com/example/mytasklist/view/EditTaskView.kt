@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -170,7 +169,8 @@ fun EditTaskView(
 
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary),
-                shape = RoundedCornerShape(10.dp),
+                //shape = RoundedCornerShape(10.dp),
+                shape = CutCornerShape(topStart = 14.dp, bottomEnd = 14.dp),
                 elevation = ButtonDefaults.buttonElevation(15.dp),
                 modifier = Modifier
                     .fillMaxWidth()
