@@ -1,5 +1,8 @@
 package com.example.mytasklist.util
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -51,6 +54,12 @@ fun CustomCard(task: Task, onEditClick: () -> Unit, onRemoveClick: () -> Unit) {
 
     Card(
         modifier = Modifier
+            .animateContentSize(
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessLow
+                )
+            )
             .padding(
                 bottom = 10.dp,
                 start = 10.dp,
