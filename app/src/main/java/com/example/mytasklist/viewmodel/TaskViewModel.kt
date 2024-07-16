@@ -35,10 +35,6 @@ class TaskViewModel(
         tasksRepository.addTask(task)
     }
 
-    suspend fun updateTask(task: Task) {
-        tasksRepository.updateTask(task = task)
-    }
-
     suspend fun removeTask(task: Task) {
         tasksRepository.removeTask(task = task)
     }

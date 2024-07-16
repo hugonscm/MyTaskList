@@ -24,16 +24,15 @@ fun NavManager(darkTheme: Boolean, onThemeUpdated: () -> Unit) {
             AddTaskView(navController)
         }
 
-        composable("editTaskView/{id}/{title}/{details}", arguments = listOf(
-            navArgument("id") { type = NavType.IntType },
-            navArgument("title") { type = NavType.StringType },
-            navArgument("details") { type = NavType.StringType }
-        )) {
+        composable(
+            "editTaskView/{id}",
+            arguments = listOf(
+                navArgument("id") { type = NavType.IntType },
+            )
+        ) {
             EditTaskView(
                 navController,
                 it.arguments!!.getInt("id"),
-                it.arguments?.getString("title").toString(),
-                it.arguments?.getString("details").toString()
             )
         }
     }
