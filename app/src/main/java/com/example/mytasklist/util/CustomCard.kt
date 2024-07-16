@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
@@ -65,8 +65,8 @@ fun CustomCard(task: Task, onEditClick: () -> Unit, onRemoveClick: () -> Unit) {
                 start = 10.dp,
                 end = 10.dp
             ),
-//        shape = RoundedCornerShape(10.dp),
-        shape = CutCornerShape(topStart = 14.dp, bottomEnd = 14.dp),
+        shape = RoundedCornerShape(10.dp),
+        //shape = CutCornerShape(topStart = 14.dp, bottomEnd = 14.dp),
         onClick = { expanded = !expanded }
     ) {
         Column(
