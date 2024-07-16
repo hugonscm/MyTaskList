@@ -1,6 +1,7 @@
 package com.example.mytasklist.viewmodel
 
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -13,6 +14,10 @@ object AppViewModelProvider {
         }
         initializer {
             ThemeViewModel(taskApplication().applicationContext)
+        }
+        initializer {
+            val savedStateHandle = createSavedStateHandle()
+            EditTaskViewModel(savedStateHandle, taskApplication().container.tasksRepository)
         }
     }
 }

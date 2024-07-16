@@ -41,7 +41,6 @@ import com.example.mytasklist.util.ThemeSwitcher
 import com.example.mytasklist.viewmodel.AppViewModelProvider
 import com.example.mytasklist.viewmodel.TaskViewModel
 import kotlinx.coroutines.launch
-import java.net.URLEncoder
 
 @Composable
 fun HomeView(
@@ -94,11 +93,9 @@ fun HomeView(
             if (list.isNotEmpty()) {
                 LazyColumn {
                     items(list) {
-                        val encodedTitle = URLEncoder.encode(it.title, "UTF-8")
-                        val encodedDetails = URLEncoder.encode(it.details, "UTF-8")
                         CustomCard(
                             task = it,
-                            onEditClick = { navController.navigate("editTaskView/${it.id}/$encodedTitle/$encodedDetails") },
+                            onEditClick = { navController.navigate("editTaskView/${it.id}") },
                             onRemoveClick = {
                                 coroutineScope.launch {
                                     taskViewModel.removeTask(it)

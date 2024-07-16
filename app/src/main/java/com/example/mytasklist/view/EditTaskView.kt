@@ -20,6 +20,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -36,27 +37,22 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.mytasklist.R
-import com.example.mytasklist.model.Task
 import com.example.mytasklist.navigation.canGoBack
 import com.example.mytasklist.theme.myFontFamily
 import com.example.mytasklist.util.CustomTopAppBar
 import com.example.mytasklist.viewmodel.AppViewModelProvider
-import com.example.mytasklist.viewmodel.TaskViewModel
+import com.example.mytasklist.viewmodel.EditTaskViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun EditTaskView(
     navController: NavController,
     id: Int,
-    title: String,
-    details: String,
-    taskViewModel: TaskViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    editTaskViewModel: EditTaskViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val editTaskState by editTaskViewModel.editTaskState.collectAsState()
 
     val coroutineScope = rememberCoroutineScope()
-
-    var newTitle by rememberSaveable { mutableStateOf(title) }
-    var newDetails by rememberSaveable { mutableStateOf(details) }
 
     var isTitleError by rememberSaveable { mutableStateOf(false) }
     var isDetailsError by rememberSaveable { mutableStateOf(false) }
@@ -97,9 +93,9 @@ fun EditTaskView(
                 .padding(10.dp)
         ) {
             OutlinedTextField(
-                value = newTitle,
+                value = editTaskState.task.title,
                 onValueChange = {
-                    newTitle = it
+                    editTaskViewModel.setTittle(it)
                     isTitleError = false
                 },
                 isError = isTitleError,
@@ -122,9 +118,9 @@ fun EditTaskView(
             Spacer(modifier = Modifier.height(3.dp))
 
             OutlinedTextField(
-                value = newDetails,
+                value = editTaskState.task.details,
                 onValueChange = {
-                    newDetails = it
+                    editTaskViewModel.setDetails(it)
                     isDetailsError = false
                 },
                 isError = isDetailsError,
@@ -148,19 +144,18 @@ fun EditTaskView(
 
             Button(
                 onClick = {
-                    if (newTitle.isNotEmpty() && newDetails.isNotEmpty()) {
-                        val task = Task(id = id, title = newTitle, details = newDetails)
+                    if (editTaskState.task.title.isNotEmpty() && editTaskState.task.details.isNotEmpty()) {
 
                         coroutineScope.launch {
-                            taskViewModel.updateTask(task)
+                            editTaskViewModel.updateTask(editTaskState.task)
                         }
 
                         navController.popBackStack("homeView", false)
                     } else {
-                        if (newTitle.isEmpty()) {
+                        if (editTaskState.task.title.isEmpty()) {
                             isTitleError = true
                         }
-                        if (newDetails.isEmpty()) {
+                        if (editTaskState.task.details.isEmpty()) {
                             isDetailsError = true
                         }
                     }
