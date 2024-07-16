@@ -1,6 +1,5 @@
 package com.example.mytasklist.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,7 +25,6 @@ class EditTaskViewModel(
     init {
         viewModelScope.launch {
             tasksRepository.getTask(taskId).collect {
-                Log.e("Title", it.toString())
                 _editTaskState.update { currentState ->
                     currentState.copy(
                         task = it
