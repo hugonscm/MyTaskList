@@ -1,5 +1,6 @@
 package com.example.mytasklist.di
 
+import android.content.Context
 import androidx.room.Room
 import com.example.mytasklist.room.OfflineTasksRepository
 import com.example.mytasklist.room.TaskDatabase
@@ -20,15 +21,16 @@ val appModule = module {
 }
 
 val dbModule = module {
-    single {
-        Room.databaseBuilder(
-            androidContext(),
-            TaskDatabase::class.java, "db_task"
-        )
-            .fallbackToDestructiveMigration()
-            .build()
-    }
-
+    single { provideDatabase(androidContext()) }
     single { get<TaskDatabase>().taskDao() }
-    single<TasksRepository> { OfflineTasksRepository(get()) }
+    single<TasksRepository> { OfflineTasksRepository(taskDao = get()) }
+}
+
+fun provideDatabase(androidContext: Context): TaskDatabase {
+    return Room.databaseBuilder(
+        androidContext,
+        TaskDatabase::class.java, "db_task"
+    )
+        .fallbackToDestructiveMigration()
+        .build()
 }
