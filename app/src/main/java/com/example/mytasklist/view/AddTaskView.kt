@@ -63,6 +63,8 @@ fun AddTaskView(
     var isTitleError by rememberSaveable { mutableStateOf(false) }
     var isDetailsError by rememberSaveable { mutableStateOf(false) }
 
+    var enableButton by rememberSaveable { mutableStateOf(true) }
+
     val colorsTextFields = OutlinedTextFieldDefaults.colors(
         unfocusedContainerColor = MaterialTheme.colorScheme.tertiary.copy(0.9f),
         focusedContainerColor = MaterialTheme.colorScheme.tertiary.copy(0.9f),
@@ -160,6 +162,7 @@ fun AddTaskView(
 
             Button(
                 onClick = {
+                    enableButton = false
                     if (title.isNotEmpty() && details.isNotEmpty()) {
                         val task = Task(title = title, details = details)
 
@@ -175,10 +178,15 @@ fun AddTaskView(
                         if (details.isEmpty()) {
                             isDetailsError = true
                         }
+                        enableButton = true
                     }
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.tertiary,
+                    disabledContainerColor = Color.Gray
+                ),
                 shape = RoundedCornerShape(10.dp),
+                enabled = enableButton,
                 //shape = CutCornerShape(topStart = 14.dp, bottomEnd = 14.dp),
                 elevation = ButtonDefaults.buttonElevation(15.dp),
                 modifier = Modifier

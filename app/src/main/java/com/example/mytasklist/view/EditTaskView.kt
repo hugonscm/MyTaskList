@@ -62,6 +62,8 @@ fun EditTaskView(
     var isTitleError by rememberSaveable { mutableStateOf(false) }
     var isDetailsError by rememberSaveable { mutableStateOf(false) }
 
+    var enableButton by rememberSaveable { mutableStateOf(true) }
+
     val colorsTextFields = OutlinedTextFieldDefaults.colors(
         unfocusedContainerColor = MaterialTheme.colorScheme.tertiary.copy(0.9f),
         focusedContainerColor = MaterialTheme.colorScheme.tertiary.copy(0.9f),
@@ -159,6 +161,7 @@ fun EditTaskView(
 
             Button(
                 onClick = {
+                    enableButton = false
                     if (title.isNotEmpty() && details.isNotEmpty()) {
 
                         coroutineScope.launch {
@@ -173,10 +176,14 @@ fun EditTaskView(
                         if (editTaskState.task.details.isEmpty()) {
                             isDetailsError = true
                         }
+                        enableButton = true
                     }
 
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.tertiary,
+                    disabledContainerColor = Color.Gray
+                ),
                 shape = RoundedCornerShape(10.dp),
                 //shape = CutCornerShape(topStart = 14.dp, bottomEnd = 14.dp),
                 elevation = ButtonDefaults.buttonElevation(15.dp),
