@@ -1,19 +1,20 @@
 package com.example.mytasklist
 
 import android.app.Application
-import com.example.mytasklist.room.AppContainer
-import com.example.mytasklist.room.AppDataContainer
-
+import com.example.mytasklist.di.appModule
+import com.example.mytasklist.di.dbModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.GlobalContext.startKoin
 
 class TaskApplication : Application() {
 
-    /**
-     * AppContainer instance used by the rest of classes to obtain dependencies
-     */
-    lateinit var container: AppContainer
-
     override fun onCreate() {
         super.onCreate()
-        container = AppDataContainer(this)
+        startKoin {
+            androidLogger()
+            androidContext(this@TaskApplication)
+            modules(appModule, dbModule)
+        }
     }
 }

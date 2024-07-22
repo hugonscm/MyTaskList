@@ -2,6 +2,6 @@ package com.example.mytasklist.states
 
 import com.example.mytasklist.model.Task
 
-data class EditTaskState(
-    val task: Task = Task(title = "", details = "")
+data class TaskListState(
+    val taskList: List<Task> = emptyList()
 )

@@ -78,4 +78,9 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
 
     implementation(libs.androidx.core.splashscreen)
+
+    implementation(libs.koin.androidx.compose)
+    implementation (libs.koin.android)
+    implementation(kotlin("script-runtime"))
+
 }

@@ -21,6 +21,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -36,27 +37,28 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.mytasklist.R
 import com.example.mytasklist.model.Task
 import com.example.mytasklist.navigation.canGoBack
 import com.example.mytasklist.theme.myFontFamily
 import com.example.mytasklist.util.CustomTopAppBar
-import com.example.mytasklist.viewmodel.AppViewModelProvider
-import com.example.mytasklist.viewmodel.TaskViewModel
+import com.example.mytasklist.viewmodel.AddTaskViewModel
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AddTaskView(
     navController: NavController,
-    taskViewModel: TaskViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    addTaskViewModel: AddTaskViewModel = koinViewModel<AddTaskViewModel>()
 ) {
 
-    val coroutineScope = rememberCoroutineScope()
+    val addTaskState by addTaskViewModel.taskState.collectAsState()
 
-    var title by rememberSaveable { mutableStateOf("") }
-    var details by rememberSaveable { mutableStateOf("") }
+    val title = addTaskState.task.title
+    val details = addTaskState.task.details
+
+    val coroutineScope = rememberCoroutineScope()
 
     var isTitleError by rememberSaveable { mutableStateOf(false) }
     var isDetailsError by rememberSaveable { mutableStateOf(false) }
@@ -99,7 +101,7 @@ fun AddTaskView(
             OutlinedTextField(
                 value = title,
                 onValueChange = {
-                    title = it
+                    addTaskViewModel.setTittle(it)
                     isTitleError = false
                 },
                 keyboardOptions = KeyboardOptions.Default.copy(
@@ -129,7 +131,7 @@ fun AddTaskView(
             OutlinedTextField(
                 value = details,
                 onValueChange = {
-                    details = it
+                    addTaskViewModel.setDetails(it)
                     isDetailsError = false
                 },
                 keyboardOptions = KeyboardOptions.Default.copy(
@@ -162,7 +164,7 @@ fun AddTaskView(
                         val task = Task(title = title, details = details)
 
                         coroutineScope.launch {
-                            taskViewModel.addTask(task)
+                            addTaskViewModel.addTask(task)
                         }
 
                         navController.popBackStack("homeView", false)

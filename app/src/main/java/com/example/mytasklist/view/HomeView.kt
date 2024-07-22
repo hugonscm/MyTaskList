@@ -32,25 +32,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.mytasklist.R
 import com.example.mytasklist.theme.myFontFamily
 import com.example.mytasklist.util.CustomCard
 import com.example.mytasklist.util.ThemeSwitcher
-import com.example.mytasklist.viewmodel.AppViewModelProvider
+//import com.example.mytasklist.viewmodel.AppViewModelProvider
 import com.example.mytasklist.viewmodel.TaskViewModel
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeView(
     navController: NavController,
     darkTheme: Boolean,
     onThemeUpdated: () -> Unit,
-    taskViewModel: TaskViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    taskViewModel: TaskViewModel = koinViewModel<TaskViewModel>()
 ) {
 
-    val uiTaskState by taskViewModel.taskState.collectAsState()
+    val uiTaskState by taskViewModel.taskListState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
 
     val list = uiTaskState.taskList

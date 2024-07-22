@@ -13,12 +13,11 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mytasklist.navigation.NavManager
 import com.example.mytasklist.theme.ThemeSwitcherTheme
-import com.example.mytasklist.viewmodel.AppViewModelProvider
 import com.example.mytasklist.viewmodel.ThemeViewModel
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "dark_theme_datastore")
 
@@ -32,13 +31,13 @@ class MainActivity : ComponentActivity() {
             val ctx = LocalContext.current
             val scope = rememberCoroutineScope()
 
-            val themeViewModel: ThemeViewModel = viewModel(factory = AppViewModelProvider.Factory)
+            val themeViewModel: ThemeViewModel = koinViewModel<ThemeViewModel>()
             val themeViewModelState by themeViewModel.themeState.collectAsState()
 
             val keepSplashScreenOnScreen = !themeViewModelState.isThemeLoaded
             splashScreen.setKeepOnScreenCondition { keepSplashScreenOnScreen }
 
-            // 0 = darktheme  1 = lighttheme
+            // 0 = darkTheme  1 = lightTheme
             val isDarkTheme =
                 themeViewModelState.isThemeLoaded && themeViewModelState.isDarkTheme == "0"
 

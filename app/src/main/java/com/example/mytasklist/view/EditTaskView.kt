@@ -37,23 +37,25 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.mytasklist.R
 import com.example.mytasklist.navigation.canGoBack
 import com.example.mytasklist.theme.myFontFamily
 import com.example.mytasklist.util.CustomTopAppBar
-import com.example.mytasklist.viewmodel.AppViewModelProvider
 import com.example.mytasklist.viewmodel.EditTaskViewModel
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun EditTaskView(
     navController: NavController,
     id: Int,
-    editTaskViewModel: EditTaskViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    editTaskViewModel: EditTaskViewModel = koinViewModel<EditTaskViewModel>()
 ) {
-    val editTaskState by editTaskViewModel.editTaskState.collectAsState()
+    val editTaskState by editTaskViewModel.taskState.collectAsState()
+
+    val title = editTaskState.task.title
+    val details = editTaskState.task.details
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -96,7 +98,7 @@ fun EditTaskView(
                 .padding(10.dp)
         ) {
             OutlinedTextField(
-                value = editTaskState.task.title,
+                value = title,
                 onValueChange = {
                     editTaskViewModel.setTittle(it)
                     isTitleError = false
@@ -126,7 +128,7 @@ fun EditTaskView(
             Spacer(modifier = Modifier.height(3.dp))
 
             OutlinedTextField(
-                value = editTaskState.task.details,
+                value = details,
                 onValueChange = {
                     editTaskViewModel.setDetails(it)
                     isDetailsError = false
@@ -157,7 +159,7 @@ fun EditTaskView(
 
             Button(
                 onClick = {
-                    if (editTaskState.task.title.isNotEmpty() && editTaskState.task.details.isNotEmpty()) {
+                    if (title.isNotEmpty() && details.isNotEmpty()) {
 
                         coroutineScope.launch {
                             editTaskViewModel.updateTask(editTaskState.task)
