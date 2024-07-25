@@ -4,8 +4,7 @@ Aplicativo de listas de tarefas.
 
 ## Tecnologias usadas e características
 - Framework Jetpack Compose
-- Kotlin
-- Persistência de dados com o Room
+- Persistência de dados (Room)
 - Google Fonts
 - SplashScreen
 - Pattern MVVM
