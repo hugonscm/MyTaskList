@@ -5,6 +5,7 @@ Aplicativo de listas de tarefas.
 ## Tecnologias usadas e características
 - Framework Jetpack Compose
 - Data Persistence (Room)
+- Datastore
 - Dependency Injection (Koin)
 - Design Pattern (MVVM)
 - Google Fonts
