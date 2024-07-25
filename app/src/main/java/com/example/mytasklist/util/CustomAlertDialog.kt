@@ -1,5 +1,6 @@
 package com.example.mytasklist.util
 
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.AlertDialog
@@ -12,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mytasklist.R
 import com.example.mytasklist.theme.myFontFamily
@@ -19,6 +21,7 @@ import com.example.mytasklist.theme.myFontFamily
 @Composable
 fun CustomAlertDialog(onclose: () -> Unit, onConfirm: () -> Unit) {
     AlertDialog(
+        shape = CutCornerShape(topStart = 14.dp, bottomEnd = 14.dp),
         containerColor = Color.White,
         onDismissRequest = {
             onclose()

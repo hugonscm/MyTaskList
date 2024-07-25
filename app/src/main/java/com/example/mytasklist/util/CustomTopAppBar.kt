@@ -42,7 +42,7 @@ fun CustomTopAppBar(onBackPressed: () -> Unit, barTitle: String) {
                 onBackPressed()
             },
             colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.tertiary),
-            elevation = ButtonDefaults.buttonElevation(10.dp)
+            elevation = ButtonDefaults.buttonElevation(10.dp),
         ) {
             Icon(
                 Icons.AutoMirrored.Filled.ArrowBack,
