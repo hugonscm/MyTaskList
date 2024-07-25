@@ -40,7 +40,6 @@ import com.example.mytasklist.room.RepositoryResponse
 import com.example.mytasklist.theme.myFontFamily
 import com.example.mytasklist.util.CustomCard
 import com.example.mytasklist.util.ThemeSwitcher
-//import com.example.mytasklist.viewmodel.AppViewModelProvider
 import com.example.mytasklist.viewmodel.TaskViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -103,7 +102,7 @@ fun HomeView(
 
                     if (list.isNotEmpty()) {
                         LazyColumn {
-                            items(list) {
+                            items(items = list, key = {it.id}) {
                                 CustomCard(
                                     task = it,
                                     onEditClick = { navController.navigate("editTaskView/${it.id}") },
